@@ -97,6 +97,10 @@
 				<tr class="active"><th>L.M.P.</th><th>E.D.D.</th></tr>
 				<tr><th>{{showDate(lmp_dt)}}</th><th>{{showDate(edd_dt)}}</th></tr>
 			    </table>
+			    <hr>
+			    <table class="table" data-ng-show="calcDate()">
+				<tr><th class="active">Maturation by Date at present</th><th>{{calcDate()}}</th></tr>
+			    </table>
 			</div>
 		    </div>
 		</div><!-- col -->
@@ -193,14 +197,25 @@
 		     $scope.lmp_dt=null;
 		 }
 	     };
+	     $scope.calcDate=function(){
+		 if($scope.lmp_dt!=null){
+		     dt=moment($scope.lmp_dt);
+		     if(dt.isValid()){
+			 today=moment();
+			 days=today.diff(dt, "days");
+			 if(days>0){
+			     return Math.floor(days/7)+" weeks "+days%7+" days";
+			 }
+		     }
+		 }
+	     };
 	     $scope.calcUsg=function(){
 		 if($scope.usg_dt!=null){
-		 dt=moment($scope.usg_dt);
+		     dt=moment($scope.usg_dt);
 		     if(dt.isValid()){
 			 if($scope.usg_wk>=0 && $scope.usg_wk<=52 && $scope.usg_dy>=0 && $scope.usg_dy<=6){
 			     today=moment();
 			     diff=today.diff(dt, "days");
-			     console.log(diff);
 			     days=$scope.usg_wk*7+$scope.usg_dy+diff;
 			     return Math.floor(days/7)+" weeks "+days%7+" days";
 			 }
