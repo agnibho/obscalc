@@ -58,7 +58,7 @@
 				<li><a href="#panel-edd" aria-controls="panel-edd" data-toggle="tab">Enter E.D.D.</a></li>
 			    </ul>
 			    <div class="tab-content">
-				<div class="panel panel-info tab-pane active" id="panel-lmp">
+				<div class="panel panel-default tab-pane active" id="panel-lmp">
 				    <div class="panel-body">
 					<form name="form_lmp">
 					    <div class="form-group">
@@ -75,7 +75,7 @@
 					</form>
 				    </div><!-- body -->
 				</div><!-- panel -->
-				<div class="panel panel-info tab-pane" id="panel-edd">
+				<div class="panel panel-default tab-pane" id="panel-edd">
 				    <div class="panel-body">
 					<form name="form_edd">
 					    <div class="form-group">
@@ -93,14 +93,10 @@
 				    </div><!-- body -->
 				</div><!-- panel -->
 			    </div><!-- tab -->
-			    <div id="out-edd-box" class="panel panel-primary" stylex="display:none">
-				<div class="panel-body" id="out-edd">
-				    <table class="table">
-					<tr><th>L.M.P.</th><th>E.D.D.</th></tr>
-					<tr><td>{{showDate(lmp_dt)}}</td><td>{{showDate(edd_dt)}}</td></tr>
-				    </table>
-				</div>
-			    </div>
+			    <table class="table table-bordered" data-ng-hide="lmp_dt==null">
+				<tr class="active"><th>L.M.P.</th><th>E.D.D.</th></tr>
+				<tr><th>{{showDate(lmp_dt)}}</th><th>{{showDate(edd_dt)}}</th></tr>
+			    </table>
 			</div>
 		    </div>
 		</div><!-- col -->
@@ -125,9 +121,9 @@
 				<input type="reset" class="btn">
 			    </form>
 			    <br>
-			    <div class="panel panel-primary" stylex="display:none">
-				<div class="panel-body">Maturation by U.S.G. at present: {{calcUsg()}}</div>
-			    </div>
+			    <table class="table" data-ng-show="calcUsg()">
+				<tr><th class="active">Maturation by U.S.G. at present</th><th>{{calcUsg()}}</th></tr>
+			    </table>
 			</div><!-- body -->
 		    </div><!-- panel -->
 		</div>
