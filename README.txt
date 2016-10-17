@@ -13,7 +13,7 @@ ObsCalc is written in Javascript.
 Downloading
 -----------
 
-Latest release of ObsCalc can be downloaded from http://code.agnibho.com/obscalc/
+Latest release of ObsCalc can be downloaded from https://code.agnibho.com/obscalc/
 
 The source code is available at https://github.com/agnibho/obscalc/
 
