@@ -57,10 +57,9 @@ ObsCalc uses the following libraries which are included with ObsCalc
 for convenience. Usage of these libraries are subject to their
 respective licenses.
 
-
-* AngularJS v1.5.8
-  (c) 2010-2016 Google, Inc. http://angularjs.org
-  License: MIT
+* Vue.js v2.0.5
+  (c) 2014-2016 Evan You
+  Released under the MIT License.
 
 * jQuery v2.1.1
   (c) 2005, 2014 jQuery Foundation, Inc.
