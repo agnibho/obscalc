@@ -28,19 +28,33 @@
 <html>
     <head>
 	<title>ObsCalc</title>
+	<link rel="icon" href="dist/logo.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="bootstrap.min.css" rel="stylesheet">
-	<link href="datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
-	<link href="custom.css" rel="stylesheet">
-	<script src="jquery.min.js"></script>
-	<script src="bootstrap.min.js"></script>
-	<script src="validator.min.js"></script>
-	<script src="vue.js"></script>
-	<script src="moment.js"></script>
-	<script src="datepicker/js/bootstrap-datepicker.min.js"></script>
+	<style>
+	 .loader {
+	     position: absolute;
+	     left: 50%;
+	     top: 50%;
+	     border: 16px solid lavender;
+	     border-top: 16px solid #428bca;
+	     border-bottom: 16px solid #428bca;
+	     border-radius: 50%;
+	     width: 150px;
+	     height: 150px;
+	     margin: -75px 0 0 -75px;
+	     animation: spin 2s linear infinite;
+	 }
+	 
+	 @keyframes spin {
+	     0% { transform: rotate(0deg); }
+	     100% { transform: rotate(360deg); }
+	 }
+	</style>
+	
     </head>
     <body>
-	<div class="container">
+	<div class="loader"></div>
+	<div class="container" style="display:none">
 	    <div class="text-primary">
 		<div class="jumbotron">
 		    <h1>ObsCalc</h1>
@@ -49,120 +63,17 @@
 	    </div>
 	    <div class="row" id="app">
 		<div class="col-sm-6">
-		    <div class="panel panel-default">
-			<div class="panel-heading">
-			    <p><strong>Calculate by Date</strong></p>
-			</div>
-			<div class="panel panel-body">
-			    <ul class="nav nav-tabs">
-				<li class="active"><a href="#panel-lmp" aria-controls="panel-lmp" data-toggle="tab">Enter L.M.P.</a></li>
-				<li><a href="#panel-edd" aria-controls="panel-edd" data-toggle="tab">Enter E.D.D.</a></li>
-			    </ul>
-			    <div class="tab-content">
-				<div class="panel panel-default tab-pane active" id="panel-lmp">
-				    <div class="panel-body">
-					<form data-toggle="validator">
-					    <div class="form-group">
-						<label>Enter L.M.P.:</label>
-						<div class="row">
-						    <div class="col-sm-8">
-							<div class="form-group"><input class="form-control datepicker" type="date" v-model="lmpDt" placeholder="YYYY-MM-DD" autocomplete="off" require v-on:input="eddUpdt"><div class="help-block with-errors"></div></div>
-						    </div>
-						    <div class="col-sm-4">
-							<input type="reset" class="btn">
-						    </div>
-						</div>
-					    </div>
-					</form>
-				    </div><!-- body -->
-				</div><!-- panel -->
-				<div class="panel panel-default tab-pane" id="panel-edd">
-				    <div class="panel-body">
-					<form data-toggle="validator">
-					    <div class="form-group">
-						<label>Enter E.D.D.:</label>
-						<div class="row">
-						    <div class="col-sm-8">
-							<div class="form-group"><input class="form-control datepicker" type="date" v-model="eddDt" placeholder="YYYY-MM-DD" autocomplete="off" require  v-on:input="lmpUpdt"><div class="help-block with-errors"></div></div>
-						    </div>
-						    <div class="col-sm-4">
-							<input type="reset" class="btn">
-						    </div>
-						</div>
-					    </div>
-					</form>
-				    </div><!-- body -->
-				</div><!-- panel -->
-			    </div><!-- tab -->
-			    <table class="table table-bordered" v-if="lmpVal">
-				<tr class="active"><th>L.M.P.</th><th>E.D.D.</th></tr>
-				<tr><th vbind="lmpDt">{{lmpVal}}</th><th>{{eddVal}}</th></tr>
-			    </table>
-			    <hr>
-			    <table class="table" v-if="dateMat">
-				<tr><th class="active">Maturation by Date at present</th><th>{{dateMat}}</th></tr>
-			    </table>
-			</div>
-		    </div>
-		</div><!-- col -->
+		    <by-date></by-date>
+		</div>
 		<div class="col-sm-6">
-		    <div class="panel panel-default tab-pane" id="panel-usg">
-			<div class="panel-heading">
-			    <p><strong>Calculate by U.S.G.</strong></p>
-			</div>
-			<div class="panel-body">
-			    <form data-toggle="validator">
-				<div class="form-group">
-				    <label>Enter U.S.G. date:</label>
-				    <div class="form-group"><input class="form-control datepicker" type="date" v-model="usgDt" placeholder="YYYY-MM-DD" require autocomplete="off"><div class="help-block with-errors"></div></div>
-				</div>
-				<div class="form-group">
-				    <label>Enter U.S.G. Maturation:</label>
-				    <div class="row">
-					<div class="col-md-6 form-group"><input class="form-control" type="number" min="0" max="52" v-model.number="usgWk" placeholder="Weeks" required autocomplete="off"><div class="help-block with-errors"></div></div>
-					<div class="col-md-6 form-group"><input class="form-control" type="number" min="0" max="6" v-model.number="usgDy" placeholder="Days" required autocomplete="off"><div class="help-block with-errors"></div></div>
-				    </div>
-				</div>
-				<input type="reset" class="btn">
-			    </form>
-			    <br>
-			    <table class="table" v-if="usgMat">
-				<tr><th class="active">Maturation by U.S.G. at present</th><th>{{usgMat}}</th></tr>
-			    </table>
-			</div><!-- body -->
-		    </div><!-- panel -->
+		    <by-usg></by-usg>
 		</div>
 	    </div>
 	    <div class="alert alert-info">
 		<h3>Copyright &copy; 2016<span id="copyright"></span> Agnibho Mondal</h3>
 		<h4><a href="http://www.agnibho.com" style="text-decoration:none;color:inherit">www.agnibho.com</a></h4>
 	    </div>
-	    <script>
-	     $(document).ready(function(){
-		 if(new Date().getFullYear()>2016){
-		     $("#copyright").text("-"+new Date().getFullYear());
-		 }
-	     });
-	    </script>
 	</div>
-	<script>
-	 $(document).ready(function(){
-	     if(navigator.userAgent.indexOf("Firefox")!=-1){
-		 $(".datepicker").datepicker({
-		     format:"yyyy-mm-dd",
-		     autoclose:true
-		 }).on("changeDate", function(){
-		     this.dispatchEvent(new Event("input"));
-		 });
-	     }
-	     $("input[type='reset']").on("click", function(e){
-		 this.form.reset();
-		 $(this.form).find("input, select, textarea").each(function(){
-		     this.dispatchEvent(new Event("input"));
-		 });
-	     });
-	 });
-	</script>
-	<script src="app.js"></script>
+	<script src="dist/bundle.js"></script>
     </body>
 </html>
