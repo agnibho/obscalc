@@ -29,6 +29,7 @@
     <head>
 	<title>ObsCalc</title>
 	<link rel="icon" href="dist/logo.png">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
 	 .loader {
@@ -63,14 +64,15 @@
 	    </div>
 	    <div class="row" id="app">
 		<div class="col-sm-6">
-		    <by-date></by-date>
+		    <by-date :settings="settings"></by-date>
 		</div>
 		<div class="col-sm-6">
-		    <by-usg></by-usg>
+		    <by-usg :settings="settings"></by-usg>
 		</div>
+		<settings-btn :settings="settings"></settings-btn>
 	    </div>
 	    <div class="alert alert-info">
-		<h3>Copyright &copy; 2016<span id="copyright"></span> Agnibho Mondal</h3>
+		<h3>Copyright &copy; <span class="copyright" data-start="2016">2016</span> Agnibho Mondal</h3>
 		<h4><a href="http://www.agnibho.com" style="text-decoration:none;color:inherit">www.agnibho.com</a></h4>
 	    </div>
 	</div>

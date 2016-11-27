@@ -30,9 +30,14 @@ $(document).ready(function(){
     $(".container").fadeIn();
 
     //Update copyright
-    if(new Date().getFullYear()>2016){
-	$("#copyright").text("-"+new Date().getFullYear());
-    }
+    $(".copyright").each(function(){
+	if(new Date().getFullYear()>$(this).data("start")){
+	    $(this).text($(this).data("start")+"-"+new Date().getFullYear());
+	}
+	else{
+	    $(this).text(new Date().getFullYear());
+	}
+    });
 
     //Emit input on form reset
     $("input[type='reset']").on("click", function(e){
@@ -52,4 +57,24 @@ $(document).ready(function(){
 	});
     }
     
+    //Change focus after number input
+    $(".jump-focus").on("input", function(){
+	if($(this).val().length == $(this).prop("maxlength")){
+	    var all=$("input").toArray();
+	    var i=all.indexOf(this)+1;
+	    $(all[i]).focus().select();
+	}
+    });
+
+    //Defocus after input finished
+    $(".stop-focus").on("input", function(){
+	if($(this).val().length == $(this).prop("maxlength")){
+	    $(this).blur();
+	    var target=$($(this).data("ref"));
+	    console.log($(target).offset());
+	    $("html, body").animate({
+		scrollTop: $(target).offset().top
+	    }, 1000);
+	}
+    });
 });

@@ -33,23 +33,35 @@
 	    <form data-toggle="validator">
 		<div class="form-group">
 		    <label>Enter U.S.G. date:</label>
-		    <div class="form-group"><input class="form-control datepicker" type="date" v-model="usgDt" placeholder="YYYY-MM-DD" require autocomplete="off"><div class="help-block with-errors"></div></div>
+		    <div v-show="settings.dstyle=='cal'">
+			<div class="form-group"><input class="form-control datepicker" type="date" v-model="usgDt" placeholder="YYYY-MM-DD" autocomplete="off" v-on:input="updt"><div class="help-block with-errors"></div></div>
+		    </div>
+		    <div v-show="settings.dstyle=='txt'">
+			<div class="row">
+			    <div class="col-md-4 form-group"><input class="form-control jump-focus" type="number" min="1" max="31" maxlength="2" v-model.number="usgDD" placeholder="DD" required autocomplete="off" v-on:input="updt"><div class="help-block with-errors"></div></div>
+			    <div class="col-md-4 form-group"><input class="form-control jump-focus" type="number" min="1" max="12" maxlength="2" v-model.number="usgMM" placeholder="MM" required autocomplete="off" v-on:input="updt"><div class="help-block with-errors"></div></div>
+			    <div class="col-md-4 form-group"><input class="form-control jump-focus" type="number" min="0" max="99" maxlength="2" v-model.number="usgYY" placeholder="YY" required autocomplete="off" v-on:input="updt"><div class="help-block with-errors"></div></div>
+			</div>
+			<div><p class="text-danger text-center">{{err}}</p></div>
+		    </div>
 		</div>
 		<div class="form-group">
 		    <label>Enter U.S.G. Maturation:</label>
 		    <div class="row">
-			<div class="col-md-6 form-group"><input class="form-control" type="number" min="0" max="52" v-model.number="usgWk" placeholder="Weeks" required autocomplete="off"><div class="help-block with-errors"></div></div>
-			<div class="col-md-6 form-group"><input class="form-control" type="number" min="0" max="6" v-model.number="usgDy" placeholder="Days" required autocomplete="off"><div class="help-block with-errors"></div></div>
+			<div class="col-md-6 form-group"><input class="form-control jump-focus" type="number" min="0" max="52" maxlength="2" v-model.number="usgWk" placeholder="Weeks" required autocomplete="off"><div class="help-block with-errors"></div></div>
+			<div class="col-md-6 form-group"><input class="form-control stop-focus" type="number" min="0" max="6" maxlength="1" v-model.number="usgDy" placeholder="Days" required autocomplete="off" data-ref="#usgmat"><div class="help-block with-errors"></div></div>
 		    </div>
 		</div>
 		<input type="reset" class="btn">
 	    </form>
 	    <br>
-	    <table class="table" v-if="usgMat">
-		<tbody>
-		    <tr><th class="active">Maturation by U.S.G. at present</th><th>{{usgMat}}</th></tr>
-		</tbody>
-	    </table>
+	    <div id="usgmat">
+		<table class="table" v-if="usgMat">
+		    <tbody>
+			<tr><th class="active">Maturation by U.S.G. at present</th><th>{{usgMat}}</th></tr>
+		    </tbody>
+		</table>
+	    </div>
 	</div>
     </div>
 </template>
@@ -57,10 +69,11 @@
 <script>
  import moment from "moment";
  export default {
-     name: 'ByDate',
-     data(){
+     name:'ByUsg',
+     props:['settings'],
+     data:function(){
 	 return{
-	     eddUpdt:"",usgDt:"",usgWk:"",usgDy:""
+	     usgDt:"",usgWk:"",usgDy:""
 	 }
      },
      computed:{
@@ -72,6 +85,39 @@
 		     var diff=today.diff(dt, "days");
 		     var days=this.usgWk*7+this.usgDy+diff;
 		     return Math.floor(days/7)+" weeks "+days%7+" days";
+		 }
+	     }
+	 }
+     },
+     methods:{
+	 updt:function(){
+	     this.err="";
+	     if(this.settings.dstyle=="txt"){
+		 if(this.usgYY>9){
+		     var strYY=""+this.usgYY;
+		 }
+		 else{
+		     var strYY="0"+this.usgYY;
+		 }
+		 var dt=moment(this.usgDD+"-"+this.usgMM+"-"+strYY, "D-M-YY", true);
+	     }
+	     else{
+		 var dt=moment(this.usgDt, "YYYY-MM-DD", true);
+	     }
+	     if(dt.isValid()){
+		 if(this.settings.dstyle=="txt"){
+		     this.usgDt=dt.format("YYYY-MM-DD");
+		 }
+		 else{
+		     this.usgDD=dt.format("DD");
+		     this.usgMM=dt.format("MM");
+		     this.usgYY=dt.format("YY");
+		 }
+	     }
+	     else{
+		 if(this.settings.dstyle=="txt" && this.usgDD && this.usgMM && this.usgYY){
+		     this.usgDt=null;
+		     this.err="The date you have entered is invalid.";
 		 }
 	     }
 	 }

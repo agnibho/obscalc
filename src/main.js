@@ -41,13 +41,29 @@ import "bootstrap-validator";
 import Vue from "vue";
 import ByDate from "./ByDate.vue";
 import ByUsg from "./ByUsg.vue";
+import Settings from "./Settings.vue";
 
 //Start app
 new Vue({
     el: "#app",
     components: {
 	"by-date": ByDate,
-	"by-usg": ByUsg
+	"by-usg": ByUsg,
+	"settings-btn": Settings
+    },
+    data: {settings: ""},
+    mounted:function(){
+	try{
+	    this.settings=JSON.parse(localStorage.getItem("settings"));
+	}
+	finally{
+	    if(this.settings==null){
+		this.settings={dstyle:"cal"};
+	    }
+	    else if(this.settings.dstyle!="cal" && this.settings.dstyle!="txt"){
+		this.settings={dstyle:"cal"};
+	    }
+	}
     }
 });
 
