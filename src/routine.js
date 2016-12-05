@@ -29,6 +29,9 @@ $(document).ready(function(){
     $(".loader").remove();
     $(".container").fadeIn();
 
+    //Insert version code
+    $(".version").text(VERSION);
+
     //Update copyright
     $(".copyright").each(function(){
 	if(new Date().getFullYear()>$(this).data("start")){
@@ -86,7 +89,23 @@ $(document).ready(function(){
 	$("#notify").width($(".container").width()-20);
     });
     $.get("https://code.agnibho.com/obscalc/info.json", function(data){
-	if(data.latest > VERSION){
+	var vCurr=VERSION.split(".").map(Number);
+	var vLtst=data.latest.split(".").map(Number);
+	function isBiggerThan(v1, v2){
+	    while(v1.length<v2.length){
+		v1.push(0);
+	    }
+	    while(v2.length<v1.length){
+		v2.push(0);
+	    }
+	    for(var i=0; i<v1.length; i++){
+		if(v1[i]>v2[i]){
+		    return true;
+		}
+	    }
+	    return false;
+	}
+	if(isBiggerThan(data.latest, VERSION)){
 	    $("#notify").slideDown();
 	    $("#notify").width($(".container").width()-20);
 	    $("#notify-text").text("A new version of ObsCalc is available.");

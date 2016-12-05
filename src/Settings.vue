@@ -61,7 +61,7 @@
 			    </div>
 			    <div id="about-text" class="panel-collapse collapse">
 				<div class="panel-body">
-				    <p><strong>ObsCalc 2.0</strong></p>
+				    <p><strong>ObsCalc <span class="version"></span></strong></p>
 				    <p>ObsCalc is a free and open source software published under GPL v3. It has been developed by Agnibho Mondal &lt;mail@agnibho.com&gt;.</p>
 				    <p><a href="https://code.agnibho.com/obscalc/">https://code.agnibho.com/obscalc/</a></p>
 				    <p>Copyright &copy; <span class="copyright" data-start="2016">2016</span> Agnibho Mondal</p>
