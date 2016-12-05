@@ -77,4 +77,42 @@ $(document).ready(function(){
 	    }, 1000);
 	}
     });
+
+    //Notifications
+    $(window).resize(function(){
+	$("#notify").width($(".container").width()-20);
+    });
+    $(window).scroll(function(){
+	$("#notify").width($(".container").width()-20);
+    });
+    $.get("https://code.agnibho.com/obscalc/info.json", function(data){
+	if(data.latest > VERSION){
+	    $("#notify").slideDown();
+	    $("#notify").width($(".container").width()-20);
+	    $("#notify-text").text("A new version of ObsCalc is available.");
+	    if(document.URL.indexOf("http://")==-1 && document.URL.indexOf("https://")==-1){
+		if(/(android)/i.test(navigator.userAgent)){
+		    $("#notify-link").attr("href", data.apk);
+		    $("#notify-link").text("Download");
+		}
+		else{
+		    $("#notify-link").attr("href", data.url);
+		    $("#notify-link").text("Load");
+		}
+	    }
+	    else{
+		$("#notify-link").attr("href", data.url);
+		$("#notify-link").text("Load");
+	    }
+	}
+	else if(document.URL.indexOf("http://")!=-1 || document.URL.indexOf("https://")!=-1){
+	    if(/(android)/i.test(navigator.userAgent)){
+		$("#notify").slideDown();
+		$("#notify").width($(".container").width()-20);
+		$("#notify-text").text("");
+		$("#notify-link").attr("href", data.apk);
+		$("#notify-link").text("Download for Android");
+	    }
+	}
+    });
 });

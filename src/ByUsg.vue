@@ -52,7 +52,7 @@
 			<div class="col-md-6 form-group"><input class="form-control stop-focus" type="number" min="0" max="6" maxlength="1" v-model.number="usgDy" placeholder="Days" required autocomplete="off" data-ref="#usgmat"><div class="help-block with-errors"></div></div>
 		    </div>
 		</div>
-		<input type="reset" class="btn">
+		<input type="reset" class="btn btn-default">
 	    </form>
 	    <br>
 	    <div id="usgmat">

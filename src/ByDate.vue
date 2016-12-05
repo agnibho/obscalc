@@ -56,7 +56,7 @@
 					</div>
 				    </div>
 				    <div class="col-sm-4">
-					<input type="reset" class="btn">
+					<input type="reset" class="btn btn-default">
 				    </div>
 				</div>
 			    </div>
