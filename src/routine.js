@@ -124,14 +124,5 @@ $(document).ready(function(){
 		$("#notify-link").text("Load");
 	    }
 	}
-	else if(document.URL.indexOf("http://")!=-1 || document.URL.indexOf("https://")!=-1){
-	    if(/(android)/i.test(navigator.userAgent)){
-		$("#notify").slideDown();
-		$("#notify").width($(".container").width()-20);
-		$("#notify-text").text("");
-		$("#notify-link").attr("href", data.apk);
-		$("#notify-link").text("Download for Android");
-	    }
-	}
     });
 });
