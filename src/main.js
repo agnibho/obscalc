@@ -8,17 +8,17 @@
    All rights reserved
  **********************************************************************
    This file is part of ObsCalc.
-   
+
    ObsCalc is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    ObsCalc is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with Obscalc. If not, see <http://www.gnu.org/licenses/>.
  **********************************************************************/
@@ -45,27 +45,32 @@ import Settings from "./Settings.vue";
 
 //Start app
 new Vue({
-    el: "#app",
-    components: {
-	"by-date": ByDate,
-	"by-usg": ByUsg,
-	"settings-btn": Settings
-    },
-    data: {settings: ""},
-    mounted:function(){
-	try{
-	    this.settings=JSON.parse(localStorage.getItem("settings"));
-	}
-	finally{
-	    if(this.settings==null){
-		this.settings={dstyle:"cal"};
-	    }
-	    else if(this.settings.dstyle!="cal" && this.settings.dstyle!="txt"){
-		this.settings={dstyle:"cal"};
-	    }
-	}
+  el: "#app",
+  components: {
+    "by-date": ByDate,
+    "by-usg": ByUsg,
+    "settings-btn": Settings
+  },
+  data: {settings: ""},
+  mounted:function(){
+    try{
+      this.settings=JSON.parse(localStorage.getItem("obscalc_settings"));
     }
+    catch(e){
+    }
+    finally{
+      if(this.settings==null){
+        this.settings={dstyle:"cal"};
+      }
+      else if(this.settings.dstyle!="cal" && this.settings.dstyle!="txt"){
+        this.settings={dstyle:"cal"};
+      }
+    }
+  }
 });
 
 //Routine jobs
-import "./routine.js";
+import "./routine.js"
+
+//Source Map
+//#sourceMappingURL=dist/bundle.js.map;
